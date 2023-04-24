@@ -33,6 +33,10 @@ async def embed(response: Response):
         response.status_code = status.HTTP_201_CREATED
         response.description = "Embeddings created"
     else:
+        # Iterate through all the content rows in the database
+        for row in dbconnection.execute(f'SELECT * FROM {CONTENT_TABLE_NAME}'):
+            logging.info("Row %s: %s", row[0], row[1][:40])
+
         response.status_code = status.HTTP_200_OK
         response.description = "Embeddings already exist"
 
